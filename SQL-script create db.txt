@@ -1,0 +1,434 @@
+/*==============================================================*/
+/* DBMS name:      Microsoft SQL Server 2008                    */
+/* Created on:     30.11.2023 10:15:56                          */
+/*==============================================================*/
+
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('Book') and o.name = 'FK_BOOK_HAVE_AUTHOR')
+alter table Book
+   drop constraint FK_BOOK_HAVE_AUTHOR
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('Book') and o.name = 'FK_BOOK_HAVE_PUBLISH')
+alter table Book
+   drop constraint FK_BOOK_HAVE_PUBLISH
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BookCategory') and o.name = 'FK_BOOK_HAVE_CAT')
+alter table BookCategory
+   drop constraint FK_BOOK_HAVE_CAT
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('BookCategory') and o.name = 'FK_CAT_HAVE_BOOK')
+alter table BookCategory
+   drop constraint FK_CAT_HAVE_BOOK
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('Instance') and o.name = 'FK_LIBRARIA_GIVE_INSTANCE')
+alter table Instance
+   drop constraint FK_LIBRARIA_GIVE_INSTANCE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('Instance') and o.name = 'FK_INSTANCE_HAVE_STATUS')
+alter table Instance
+   drop constraint FK_INSTANCE_HAVE_STATUS
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('Instance') and o.name = 'FK_BOOK_INCLUDE_INSTANCE')
+alter table Instance
+   drop constraint FK_BOOK_INCLUDE_INSTANCE
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('Instance') and o.name = 'FK_READER_RESERVE_INSTANCE')
+alter table Instance
+   drop constraint FK_READER_RESERVE_INSTANCE
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Admin')
+            and   type = 'U')
+   drop table Admin
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Author')
+            and   type = 'U')
+   drop table Author
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('Book')
+            and   name  = 'have_FK2'
+            and   indid > 0
+            and   indid < 255)
+   drop index Book.have_FK2
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('Book')
+            and   name  = 'have_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index Book.have_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Book')
+            and   type = 'U')
+   drop table Book
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BookCategory')
+            and   name  = 'have_FK2'
+            and   indid > 0
+            and   indid < 255)
+   drop index BookCategory.have_FK2
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('BookCategory')
+            and   name  = 'have_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index BookCategory.have_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('BookCategory')
+            and   type = 'U')
+   drop table BookCategory
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Category')
+            and   type = 'U')
+   drop table Category
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('Instance')
+            and   name  = 'have_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index Instance.have_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('Instance')
+            and   name  = 'give_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index Instance.give_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('Instance')
+            and   name  = 'reserve_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index Instance.reserve_FK
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('Instance')
+            and   name  = 'include_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index Instance.include_FK
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Instance')
+            and   type = 'U')
+   drop table Instance
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Librarian')
+            and   type = 'U')
+   drop table Librarian
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Publishing')
+            and   type = 'U')
+   drop table Publishing
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Reader')
+            and   type = 'U')
+   drop table Reader
+go
+
+if exists (select 1
+            from  sysobjects
+           where  id = object_id('Status')
+            and   type = 'U')
+   drop table Status
+go
+
+/*==============================================================*/
+/* Table: Admin                                                 */
+/*==============================================================*/
+create table Admin (
+   AdminID              int                  identity,
+   AdminName            varchar(100)         not null,
+   AdminPhone           varchar(20)          not null,
+   AdminLogin           varchar(100)         not null,
+   AdminPassword        varchar(100)         not null,
+   constraint PK_ADMIN primary key nonclustered (AdminID)
+)
+go
+
+/*==============================================================*/
+/* Table: Author                                                */
+/*==============================================================*/
+create table Author (
+   AuthorID             int                  identity,
+   AuthorName           varchar(100)         not null,
+   constraint PK_AUTHOR primary key nonclustered (AuthorID)
+)
+go
+
+/*==============================================================*/
+/* Table: Book                                                  */
+/*==============================================================*/
+create table Book (
+   BookID               int                  identity,
+   AuthorID             int                  not null,
+   PublishingID         int                  not null,
+   BookName             varchar(100)         not null,
+   BookDate             datetime             not null,
+   BookVolume           int                  not null,
+   BookCount            int                  not null,
+   constraint PK_BOOK primary key nonclustered (BookID)
+)
+go
+
+/*==============================================================*/
+/* Index: have_FK                                               */
+/*==============================================================*/
+create index have_FK on Book (
+AuthorID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: have_FK2                                              */
+/*==============================================================*/
+create index have_FK2 on Book (
+PublishingID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: BookCategory                                          */
+/*==============================================================*/
+create table BookCategory (
+   BookID               int                  not null,
+   CategoryID           int                  not null,
+   constraint PK_BOOKCATEGORY primary key nonclustered (BookID, CategoryID)
+)
+go
+
+/*==============================================================*/
+/* Index: have_FK                                               */
+/*==============================================================*/
+create index have_FK on BookCategory (
+CategoryID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: have_FK2                                              */
+/*==============================================================*/
+create index have_FK2 on BookCategory (
+BookID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: Category                                              */
+/*==============================================================*/
+create table Category (
+   CategoryID           int                  identity,
+   CategoryName         varchar(100)         not null,
+   constraint PK_CATEGORY primary key nonclustered (CategoryID)
+)
+go
+
+/*==============================================================*/
+/* Table: Instance                                              */
+/*==============================================================*/
+create table Instance (
+   ReaderID             int                  not null,
+   BookID               int                  not null,
+   LibrarianID          int                  null,
+   StatusID             int                  not null,
+   InstanceDateStart    datetime             not null,
+   InstanceDateEnd      datetime             not null,
+   constraint PK_INSTANCE primary key nonclustered (ReaderID, BookID)
+)
+go
+
+/*==============================================================*/
+/* Index: include_FK                                            */
+/*==============================================================*/
+create index include_FK on Instance (
+BookID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: reserve_FK                                            */
+/*==============================================================*/
+create index reserve_FK on Instance (
+ReaderID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: give_FK                                               */
+/*==============================================================*/
+create index give_FK on Instance (
+LibrarianID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: have_FK                                               */
+/*==============================================================*/
+create index have_FK on Instance (
+StatusID ASC
+)
+go
+
+/*==============================================================*/
+/* Table: Librarian                                             */
+/*==============================================================*/
+create table Librarian (
+   LibrarianID          int                  identity,
+   LibrarianName        varchar(100)         not null,
+   LibrarianPhone       varchar(20)          not null,
+   LibrarianLogin       varchar(100)         not null,
+   LibrarianPassword    varchar(100)         not null,
+   constraint PK_LIBRARIAN primary key nonclustered (LibrarianID)
+)
+go
+
+/*==============================================================*/
+/* Table: Publishing                                            */
+/*==============================================================*/
+create table Publishing (
+   PublishingID         int                  identity,
+   PublishingName       varchar(100)         not null,
+   PublishingAddress    varchar(1000)        not null,
+   constraint PK_PUBLISHING primary key nonclustered (PublishingID)
+)
+go
+
+/*==============================================================*/
+/* Table: Reader                                                */
+/*==============================================================*/
+create table Reader (
+   ReaderID             int                  identity,
+   ReaderName           varchar(100)         not null,
+   ReaderPhone          varchar(20)          not null,
+   ReaderLogin          varchar(100)         not null,
+   ReaderPassword       varchar(100)         not null,
+   constraint PK_READER primary key nonclustered (ReaderID)
+)
+go
+
+/*==============================================================*/
+/* Table: Status                                                */
+/*==============================================================*/
+create table Status (
+   StatusID             int                  identity,
+   StatusName           varchar(100)         not null,
+   constraint PK_STATUS primary key nonclustered (StatusID)
+)
+go
+
+alter table Book
+   add constraint FK_BOOK_HAVE_AUTHOR foreign key (AuthorID)
+      references Author (AuthorID)
+         on delete cascade
+go
+
+alter table Book
+   add constraint FK_BOOK_HAVE_PUBLISH foreign key (PublishingID)
+      references Publishing (PublishingID)
+         on delete cascade
+go
+
+alter table BookCategory
+   add constraint FK_BOOK_HAVE_CAT foreign key (BookID)
+      references Book (BookID)
+         on delete cascade
+go
+
+alter table BookCategory
+   add constraint FK_CAT_HAVE_BOOK foreign key (CategoryID)
+      references Category (CategoryID)
+         on delete cascade
+go
+
+alter table Instance
+   add constraint FK_LIBRARIA_GIVE_INSTANCE foreign key (LibrarianID)
+      references Librarian (LibrarianID)
+         on delete set null
+go
+
+alter table Instance
+   add constraint FK_INSTANCE_HAVE_STATUS foreign key (StatusID)
+      references Status (StatusID)
+         on delete cascade
+go
+
+alter table Instance
+   add constraint FK_BOOK_INCLUDE_INSTANCE foreign key (BookID)
+      references Book (BookID)
+         on delete cascade
+go
+
+alter table Instance
+   add constraint FK_READER_RESERVE_INSTANCE foreign key (ReaderID)
+      references Reader (ReaderID)
+         on delete cascade
+go
